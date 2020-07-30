@@ -4,17 +4,38 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
-let glyphStates = {
-  '♡': '♥',
-  '♥': '♡'
+document.addEventListener("DOMContentLoaded", ()=>{
+  addLikeListenerForAll();
+})
+
+function addLikeListenerForAll() {
+  const allHearts = document.querySelectorAll('.like');
+  allHearts.forEach((heart) => {
+    heart.addEventListener('click', (event) => {likes(event)})
+  });
 }
+function likes(thisHeart)
+{
+  /////
+  mimicServerCall()
+  .then(function(response) {
+    if (thisHeart.target.innerText === EMPTY_HEART)
+    {
+      thisHeart.target.innerText = FULL_HEART;
+      thisHeart.target.style.color = '#FF0000';
+    } else 
+    {
+      thisHeart.target.innerText = EMPTY_HEART;
+      thisHeart.target.style.color = '#CCCCCC';
+    }
+  })
+  .catch((error) =>  {
+      alert("Network Problem!");
+      document.getElementById("modal").className = ""
+      setTimeout(function(){ document.getElementById("modal").className = "hidden" }, 2000);
+   });
 
-let colorStates = {
-  'red': '',
-  '': 'red'
 }
-
-
 //------------------------------------------------------------------------------
 // Ignore after this point. Used only for demo purposes
 //------------------------------------------------------------------------------
